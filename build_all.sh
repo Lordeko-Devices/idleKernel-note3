@@ -21,7 +21,7 @@ RDIR=$(pwd)
 
 [ -z $VER ] && \
 # version number
-VER=6.6.3
+VER=6.6.5
 
 # output directory of flashable kernel
 OUT_DIR_ENFORCING="/home/jc/idlekernel.com/cm13.0/selinux_enforcing/v"$VER"_"$(date +'%Y_%m_%d')
@@ -83,15 +83,9 @@ BUILD_KERNEL()
 
 BUILD_RAMDISK()
 {
-	echo "Building ramdisk structure..."
-	cd $RDIR
-	mkdir -p build/ramdisk
-	cp -ar ik.ramdisk/common/* build/ramdisk
-	cp -ar ik.ramdisk/variant/$VARIANT/* build/ramdisk
-	echo "Building ramdisk.img..."
+	VARIANT=$VARIANT $RDIR/setup_ramdisk.sh
 	cd $RDIR/build/ramdisk
-	mkdir -pm 755 dev proc sys system
-	mkdir -pm 771 data
+	echo "Building ramdisk.img..."
 	find | fakeroot cpio -o -H newc | xz --check=crc32 --lzma2=dict=2MiB > $KDIR/ramdisk.cpio.xz
 	cd $RDIR
 }
