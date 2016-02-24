@@ -50,7 +50,7 @@ echo `cat $CFILE` > $SFILE
 #
 CFILE=$DDIR/cpu_governor
 SFILE=/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-CDEF=interactiveX
+CDEF=interactive
 if [ ! -f $CFILE ]; then
 	echo $CDEF > $CFILE
 fi
@@ -101,6 +101,16 @@ echo `cat $CFILE` > $SFILE
 CFILE=$DDIR/use_spi_crc
 SFILE=/sys/module/mmc_core/parameters/use_spi_crc
 CDEF=N
+if [ ! -f $CFILE ]; then
+	echo $CDEF > $CFILE
+fi
+echo `cat $CFILE` > $SFILE
+#
+# system install SuperSU
+#
+CFILE=$DDIR/supersu
+SFILE=/data/.supersu
+CDEF="SYSTEMLESS=false"
 if [ ! -f $CFILE ]; then
 	echo $CDEF > $CFILE
 fi

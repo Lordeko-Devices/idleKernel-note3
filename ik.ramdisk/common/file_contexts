@@ -327,6 +327,7 @@
 /dev/hsicctl.*                                  u:object_r:hsic_device:s0
 /dev/kgsl-3d0                                   u:object_r:gpu_device:s0
 /dev/mhi_pipe_.*                                u:object_r:mhi_device:s0
+/dev/bhi                                        u:object_r:bhi_device:s0
 /dev/msm_.*                                     u:object_r:audio_device:s0
 /dev/usf1                                       u:object_r:usf_device:s0
 /dev/msm_dsps                                   u:object_r:sensors_device:s0
@@ -762,6 +763,7 @@
 /dev/block/platform/msm_sdcc\.1/by-name/cache                 u:object_r:cache_block_device:s0
 /dev/block/mmcblk0                                            u:object_r:root_block_device:s0
 /dev/block/mmcblk0rpmb                                        u:object_r:rpmb_device:s0
+/dev/block/platform/msm_sdcc\.1/by-name/config                u:object_r:frp_block_device:s0
 #line 1 "device/samsung/hlte-common/sepolicy/file_contexts"
 
 # Bluetooth
@@ -820,8 +822,10 @@
 /system/etc/init.d/90userinit           u:object_r:userinit_exec:s0
 /data/local/userinit.sh                 u:object_r:userinit_data_exec:s0
 
-# For F2FS partitions marked "formattable"
+# For EXFAT/F2FS/NTFS partitions marked "formattable"
+/system/bin/mkfs\.exfat   u:object_r:mkfs_exec:s0
 /system/bin/mkfs\.f2fs    u:object_r:mkfs_exec:s0
+/system/bin/mkfs\.ntfs    u:object_r:mkfs_exec:s0
 
 # For minivold in recovery
 /sbin/minivold            u:object_r:vold_exec:s0
@@ -851,3 +855,7 @@
 /sys/devices/virtual/graphics/fb0/cabc          u:object_r:livedisplay_sysfs:s0
 /sys/devices/virtual/graphics/fb0/rgb           u:object_r:livedisplay_sysfs:s0
 /sys/devices/virtual/graphics/fb0/sre           u:object_r:livedisplay_sysfs:s0
+
+# fsck
+/system/bin/fsck\.ntfs                          u:object_r:fsck_exec:s0
+/system/bin/fsck\.exfat                         u:object_r:fsck_exec:s0
